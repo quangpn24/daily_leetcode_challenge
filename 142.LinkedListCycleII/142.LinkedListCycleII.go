@@ -1,7 +1,7 @@
 package main
 
 import (
-	utils "daily_leetcode_challenge"
+	"daily_leetcode_challenge/utils"
 )
 
 type ListNode = utils.ListNode

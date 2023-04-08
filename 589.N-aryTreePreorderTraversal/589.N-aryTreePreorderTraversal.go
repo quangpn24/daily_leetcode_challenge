@@ -1,6 +1,8 @@
 package main
 
-import utils "daily_leetcode_challenge"
+import (
+	"daily_leetcode_challenge/utils"
+)
 
 type Node = utils.Node
 
