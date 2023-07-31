@@ -8,12 +8,12 @@ func productExceptSelf(nums []int) []int {
 	for _, num := range nums {
 		if num == 0 {
 			numOfZero++
+			if numOfZero > 1 {
+				return make([]int, len(nums))
+			}
 		} else {
 			product = product * num
 		}
-	}
-	if numOfZero > 1 {
-		return make([]int, len(nums))
 	}
 	for i := 0; i < len(nums); i++ {
 		if nums[i] == 0 {
