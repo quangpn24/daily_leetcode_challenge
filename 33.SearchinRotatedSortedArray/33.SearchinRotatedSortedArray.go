@@ -3,40 +3,49 @@ package main
 import "fmt"
 
 func search(nums []int, target int) int {
-    pivot := len(nums) - 1
-    for i := 0; i < len(nums)-1; i++ {
-        if nums[i] > nums[i+1] {
-            pivot = i
-            break
-        }
-    }
-    index := -1
-    if target > nums[pivot] {
-        index = BinarySearch(nums[:pivot], target)
-    } else if target < nums[pivot] {
-        index = BinarySearch(nums[pivot+1:], target)
-        if index != -1 {
-            index = index + pivot + 1
-        }
-    } else {
-        return pivot
-    }
-    return index
+	if nums[0] < nums[len(nums)-1] {
+		return binarySearch(nums, target)
+	}
+
+	l, r := 0, len(nums)-1
+
+	for l < r {
+		mid := l + (r-l)/2
+		if nums[mid] > nums[r] {
+			l = mid + 1
+		} else {
+			r = mid
+		}
+	}
+
+	if nums[0] == target {
+		return 0
+	} else if nums[0] < target {
+		return binarySearch(nums[:r], target)
+	}
+
+	res := binarySearch(nums[r:], target)
+	if res != -1 {
+		return res + r
+	}
+	return -1
 }
-func BinarySearch(nums []int, target int) int {
-    l, r := 0, len(nums)-1
-    for l <= r {
-        m := (nums[l] + nums[r]) / 2
-        if nums[m] == target {
-            return m
-        } else if nums[m] < target {
-            l = m + 1
-        } else {
-            r = m - 1
-        }
-    }
-    return -1
+
+func binarySearch(nums []int, target int) int {
+	l, r := 0, len(nums)-1
+
+	for l <= r {
+		mid := l + (r-l)/2
+		if nums[mid] > target {
+			r = mid - 1
+		} else if nums[mid] < target {
+			l = mid + 1
+		} else {
+			return mid
+		}
+	}
+	return -1
 }
 func main() {
-    fmt.Println(search([]int{1, 3}, 1))
+	fmt.Println(search([]int{1, 3}, 3))
 }

@@ -26,24 +26,16 @@ func minDays(bloomDay []int, m int, k int) int {
 
 func calcBouquets(bloomDay []int, day int, k int) int {
 	cnt := 0
-	i := 0
-	for i <= len(bloomDay)-k {
-		if bloomDay[i] <= day && isMakeBouquets(bloomDay, k, i, day) {
-			cnt++
-			i += k - 1
-		}
-		i++
-	}
-	return cnt
-}
-
-func isMakeBouquets(bloomDay []int, k int, start int, day int) bool {
-	for i := start; i < start+k; i++ {
-		if bloomDay[i] > day {
-			return false
+	nDay := 0
+	for _, d := range bloomDay {
+		if d <= day {
+			nDay++
+		} else {
+			cnt += nDay / k
+			nDay = 0
 		}
 	}
-	return true
+	return cnt + nDay/k
 }
 
 func main() {
