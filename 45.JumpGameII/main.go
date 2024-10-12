@@ -1,21 +1,20 @@
 package main
 
 func jump(nums []int) int {
-	var l, r, res int
-
-	for r < len(nums)-1 {
-		farthest := 0
-		for i := l; i < r+1; i++ {
-			if i+nums[i] > farthest {
-				farthest = i + nums[i]
+	arr := make([]int, len(nums))
+	arr[0] = 0
+	for i := 1; i < len(nums); i++ {
+		for j := 0; j < i; j++ {
+			if nums[j]+j >= i {
+				if arr[i] == 0 {
+					arr[i] = arr[j] + 1
+				} else {
+					arr[i] = min(arr[j]+1, arr[i])
+				}
 			}
 		}
-		l = r + 1
-		r = farthest
-		res += 1
 	}
-
-	return res
+	return arr[len(arr)-1]
 }
 func main() {
 	//println(jump([]int{1, 1, 1, 1}))
